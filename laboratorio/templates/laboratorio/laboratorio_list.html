@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<form method="GET">
+    <input type="text" name="nome" placeholder="Buscar por nome"/>
+    <input type="submit" value="Buscar"/>
+</form>
+
+<a href="{% url 'laboratorio.novo' %}">Novo</a>
+<table>
+  <thead>
+      <tr>
+          <th>Nome do Laboratório</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for laboratorio in object_list %}
+    <tr>
+        <td>{{ laboratorio.nome_lab }}</td>
+
+        <td>
+            <a href="{% url 'laboratorio.editar' laboratorio.pk %}">Editar</a>
+            <a href="{% url 'laboratorio.remover' laboratorio.pk %}">Remover</a>        
+            
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock content %}
