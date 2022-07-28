@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<form method="GET">
+  <input type="text" name="nome" placeholder="Buscar por nome"/>
+  <input type="submit" value="Buscar"/>
+</form>
+<a href="{% url 'pessoa.novo' pk_laboratorio %}">Novo</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Número do Crachá</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pessoa in pessoas %}
+        <tr>
+            <td>{{ pessoa.nome_completo }}</td>
+            <td>{{ pessoa.email }}</td>
+            <td>{{ pessoa.numero_cracha }}</td>
+            <td>
+              <a href="{% url 'pessoa.editar' pk_laboratorio pessoa.pk %}">Editar</a>
+              <a href="{% url 'pessoa.remover' pk_laboratorio pessoa.pk %}">Remover</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

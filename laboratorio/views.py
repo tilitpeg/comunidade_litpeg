@@ -1,8 +1,10 @@
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
+from django.http.response import HttpResponseNotAllowed
+from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import Laboratorio
-from .forms import LaboratorioForm
+from .models import Laboratorio, Pessoa
+from .forms import LaboratorioForm, PessoaForm
 
 
 class ListaLaboratorioView(ListView):
@@ -36,5 +38,39 @@ class LaboratorioDeleteView(DeleteView):
   success_url = '/laboratorio/'
 
 
+def pessoas(request, pk_laboratorio):
+  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio)
+  return render(request, 'pessoa/pessoa_list.html', {'pessoas': pessoas, 'pk_laboratorio': pk_laboratorio})
+
+
+def pessoa_novo(request, pk_laboratorio):
+    form = PessoaForm()
+    if request.method == "POST":
+        form = PessoaForm(request.POST)
+        if form.is_valid():
+            pessoa = form.save(commit=False)
+            pessoa.laboratorio_id = pk_laboratorio;
+            pessoa.save()
+            return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
+
+    return render(request, 'pessoa/pessoa_form.html', {'form': form})
+
+
+def pessoa_editar(request, pk_laboratorio, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    form = PessoaForm(instance=pessoa)
+    if request.method == "POST":
+        form = PessoaForm(request.POST, instance=pessoa)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
+
+    return render(request, 'pessoa/pessoa_form.html', {'form': form})
+
+
+def pessoa_remover(request, pk_laboratorio, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    pessoa.delete()
+    return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
 
 
