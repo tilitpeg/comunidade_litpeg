@@ -1,4 +1,3 @@
-import imp
 from pathlib import Path
 from telnetlib import LOGOUT
 from dotenv import load_dotenv
