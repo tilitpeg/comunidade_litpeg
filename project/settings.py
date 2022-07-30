@@ -2,6 +2,7 @@ from pathlib import Path
 from telnetlib import LOGOUT
 from dotenv import load_dotenv
 import os
+import django_on_heroku
 
 load_dotenv()
 
@@ -120,3 +121,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = '/'
+
+# Configure Django App for Heroku.
+django_on_heroku.settings(locals())
