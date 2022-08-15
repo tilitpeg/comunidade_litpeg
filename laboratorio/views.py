@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm
+from django.db.models import Q
 
 
 class ListaLaboratorioView(ListView):
@@ -43,8 +44,16 @@ class LaboratorioDeleteView(DeleteView):
   success_url = '/laboratorio/'
 
 
-def pessoas(request, pk_laboratorio):
+def pessoas(request, pk_laboratorio=None):
+  search = request.GET.get('search')
+
   pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio)
+  # Filtro Múltiplo (O "|" faz papel do "ou")
+  if search:
+    pessoas = Pessoa.objects.filter(Q(laboratorio=pk_laboratorio),  # Mostra somente os nomes vinculados ao laboratorio
+      Q(nome_completo__icontains=search) | Q(numero_cracha__icontains=search) | Q(email__icontains=search)
+      )
+
   return render(request, 'pessoa/pessoa_list.html', {'pessoas': pessoas, 'pk_laboratorio': pk_laboratorio})
 
 
