@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Laboratorio(models.Model):
-  nome_lab = models.CharField(max_length=256)
+  nome_lab = models.CharField(max_length=256, verbose_name='Nome do Laboratório')
   usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 
@@ -14,8 +14,8 @@ class Laboratorio(models.Model):
 class Pessoa(models.Model):
   nome_completo = models.CharField(max_length=256, verbose_name='Nome')
   email = models.EmailField(verbose_name='E-mail')
-  numero_cracha = models.CharField(max_length=25)
-  funcao = models.CharField(max_length=25, default='')
+  numero_cracha = models.CharField(max_length=25, verbose_name='Número do Crachá')
+  funcao = models.CharField(max_length=25, default='', verbose_name='Função')
   laboratorio = models.ForeignKey(Laboratorio, on_delete=models.CASCADE)
 
   def __str__(self) -> str:
