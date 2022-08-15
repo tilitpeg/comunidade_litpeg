@@ -1,3 +1,6 @@
+{% load static %}
+{% load bootstrap %}
+
 <form method="post">
   {% csrf_token %}
   <p>Você tem certeza que quer deletar o/a "{{ object }}"?</p>
