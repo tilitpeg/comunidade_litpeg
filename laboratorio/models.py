@@ -12,10 +12,16 @@ class Laboratorio(models.Model):
 
 
 class Pessoa(models.Model):
+  FUNCOES = [
+    ("DOCENTE", "Docente"),
+    ("DISCENTE", "Discente"),
+    ("TECNICO", "Técnico")
+  ]
+
   nome_completo = models.CharField(max_length=256, verbose_name='Nome')
   email = models.EmailField(verbose_name='E-mail')
-  numero_cracha = models.CharField(max_length=25)
-  funcao = models.CharField(max_length=25, default='')
+  numero_cracha = models.CharField(max_length=25, verbose_name='Número do crachá')
+  funcao = models.CharField(max_length=25, choices=FUNCOES, default=None)
   laboratorio = models.ForeignKey(Laboratorio, on_delete=models.CASCADE)
 
   def __str__(self) -> str:
