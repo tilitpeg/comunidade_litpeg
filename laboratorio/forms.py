@@ -9,6 +9,13 @@ class LaboratorioForm(forms.ModelForm):
     model = Laboratorio
     fields = ['nome_lab']
 
+  def clean_nome_lab(self):
+      nome = self.cleaned_data['nome_lab']
+      if Laboratorio.objects.filter(nome_lab=nome).exists():
+        raise ValidationError(f'Erro! O laboratório {nome} já está cadastrado.')
+      
+      return nome
+
 
 class PessoaForm(forms.ModelForm):
     class Meta:
