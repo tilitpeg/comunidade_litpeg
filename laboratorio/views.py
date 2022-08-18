@@ -87,3 +87,5 @@ def pessoa_remover(request, pk_laboratorio, pk):
     pessoa.delete()
     return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
 
+
+
