@@ -51,7 +51,8 @@ def pessoas(request, pk_laboratorio=None):
   # Filtro Múltiplo (O "|" faz papel do "ou")
   if search:
     pessoas = Pessoa.objects.filter(Q(laboratorio=pk_laboratorio),  # Mostra somente os nomes vinculados ao laboratorio
-      Q(nome_completo__icontains=search) | Q(numero_cracha__icontains=search) | Q(email__icontains=search)
+      Q(nome_completo__icontains=search) | Q(numero_cracha__icontains=search) | 
+      Q(email__icontains=search) | Q(funcao__icontains=search)
       )
 
   return render(request, 'pessoa/pessoa_list.html', {'pessoas': pessoas, 'pk_laboratorio': pk_laboratorio})
