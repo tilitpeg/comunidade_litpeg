@@ -6,11 +6,6 @@ from django.contrib.auth import login
 
 from main.forms import NovoUsuarioForm
 
-
-def HomeView(request):
-  return render(request, 'main/index.html')
-
-
 def register(request):
     if request.method == "POST":
         form = NovoUsuarioForm(request.POST)
