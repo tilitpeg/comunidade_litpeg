@@ -35,3 +35,10 @@ class PessoaForm(forms.ModelForm):
         raise ValidationError(f'Erro! O email {email_field} já está cadastrado.')
       
       return email_field
+
+    def clean_numero_cracha(self):
+      numero_cracha_field = self.cleaned_data['numero_cracha']
+      if Pessoa.objects.filter(numero_cracha=numero_cracha_field).exists():
+        raise ValidationError(f'Erro! O crachá {numero_cracha_field} já está cadastrado.')
+      
+      return numero_cracha_field

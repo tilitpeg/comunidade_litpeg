@@ -6,7 +6,6 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm
 from django.db.models import Q
-from django.contrib.auth.models import User
 
 
 class ListaLaboratorioView(ListView):
@@ -91,6 +90,7 @@ def pessoa_remover(request, pk_laboratorio, pk):
     pessoa.delete()
     return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
 
+# Visualização do Admin
 
 # Primeira opção de criar uma página propria para o admin e gerar os laboratórios
 # Só precisando alterar as urls e o base.html
@@ -105,3 +105,17 @@ def laboratorio_admin(request, pk_laboratorio=None):
       )
 
   return render(request, 'laboratorio/laboratorio_list_admin.html', {'laboratorios': laboratorios})
+
+
+def pessoas_admin(request, pk_laboratorio=None):
+  search = request.GET.get('search')
+
+  pessoas = Pessoa.objects.all().order_by('nome_completo')
+  
+  if search:
+    pessoas = Pessoa.objects.filter(
+      Q(nome_completo__icontains=search) | Q(numero_cracha__icontains=search) | 
+      Q(email__icontains=search) | Q(funcao__icontains=search)
+      )
+
+  return render(request, 'pessoa/pessoa_list_admin.html', {'pessoas': pessoas})
