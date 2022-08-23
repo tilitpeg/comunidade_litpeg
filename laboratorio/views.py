@@ -1,6 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.http.response import HttpResponseNotAllowed
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
@@ -17,8 +17,6 @@ class ListaLaboratorioView(ListView):
     queryset = super().get_queryset()
     if str(self.request.user) != str('admin'):  # Mostra todos os Labs para o admin
       queryset = queryset.filter(usuario=self.request.user)
-    else:
-      reverse_lazy('laboratorio.novo')
 
     filtro_nome = self.request.GET.get('nome') or None
 
