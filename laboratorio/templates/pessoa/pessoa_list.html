@@ -49,13 +49,24 @@
         </table>
         <h1></h1>
         <a href="{% url 'pessoa.novo' pk_laboratorio %}" class="btn btn-secondary display-1 mb-4">Adicionar Membro</a>
-        <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+
+        {% if user.is_superuser %}
+            <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+        {% else %}
+            <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+        {% endif %}
+
     {% else %}
         <center>
             <h2>Este laboratório não possui membros cadastrados</h2>
             
             <a href="{% url 'pessoa.novo' pk_laboratorio %}" class="btn btn-secondary display-1 mb-4">Adicionar Membro</a>
-            <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+            {% if user.is_superuser %}
+                <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+            {% else %}
+                <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+            {% endif %}
+            
         </center>
         
     {% endif %}

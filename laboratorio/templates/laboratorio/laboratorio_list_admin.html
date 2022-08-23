@@ -16,8 +16,7 @@
             </div>
         </form>
     </div>
-    {% if user.is_superuser %}
-        <!--{% if object_list %}
+        {% if laboratorios %}
             <table class="table align-middle mb-0 bg-white">
                 <thead class="bg-light">
                 <tr style="text-align: center;">
@@ -27,7 +26,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for laboratorio in object_list %}
+                    {% for laboratorio in laboratorios %}
                     <tr style="text-align: center;">
                         <td>{{ laboratorio.nome_lab }}</td>
                         <td>{{ laboratorio.usuario}}</td>
@@ -49,43 +48,7 @@
                 <h2>Este usuário não possui laboratórios cadastrados</h2>
                 <a href="{% url 'laboratorio.novo' %}" class="btn btn-secondary display-1 mb-4">Cadastrar novo Laboratório</a>
             </center>
-        {% endif %} -->
-    
-    {% else %}
+        {% endif %}
 
-       {% if object_list %}
-        <table class="table align-middle mb-0 bg-white">
-            <thead class="bg-light">
-            <tr style="text-align: center;">
-                <th>Nome do Laboratório</th>
-                <th>Criado por </th>
-                <th>Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-                {% for laboratorio in object_list %}
-                <tr style="text-align: center;">
-                    <td>{{ laboratorio.nome_lab }}</td>
-                    <td>{{ laboratorio.usuario}}</td>
-                    <td colspan="3">
-                        <a href="{% url 'laboratorio.editar' laboratorio.pk %}" class="btn btn-warning">Editar</a>
-                        <a href="{% url 'laboratorio.remover' laboratorio.pk %}" class="btn btn-danger">Remover</a>  
-                        <a href="{% url 'laboratorio.pessoas' laboratorio.pk %}"class="btn btn-info">Membros</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <h1></h1>
-        <a href="{% url 'laboratorio.novo' %}" class="btn btn-secondary display-1 mb-4">Cadastrar novo Laboratório</a>
-
-        {% else %}
-            <center>
-                <h2>Este usuário não possui laboratórios cadastrados</h2>
-                <a href="{% url 'laboratorio.novo' %}" class="btn btn-secondary display-1 mb-4">Cadastrar novo Laboratório</a>
-            </center>
-       {% endif %}
-
-    {% endif %} 
 </div>
 {% endblock content %}
