@@ -13,7 +13,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Cadastro realizado com sucesso!")
-            return redirect('home')
+            return redirect('laboratorio.pessoas')
         messages.error(request, "Falha no cadastro do usuário.")
     form = NovoUsuarioForm()
     context = {'form': form}

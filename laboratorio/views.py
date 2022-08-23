@@ -1,11 +1,12 @@
 from django.http import HttpResponse, Http404
 from django.http.response import HttpResponseNotAllowed
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 
 class ListaLaboratorioView(ListView):
@@ -14,7 +15,11 @@ class ListaLaboratorioView(ListView):
 
   def get_queryset(self):
     queryset = super().get_queryset()
-    queryset = queryset.filter(usuario=self.request.user)
+    if str(self.request.user) != str('admin'):  # Mostra todos os Labs para o admin
+      queryset = queryset.filter(usuario=self.request.user)
+    else:
+      reverse_lazy('laboratorio.novo')
+
     filtro_nome = self.request.GET.get('nome') or None
 
     if filtro_nome:
@@ -42,6 +47,17 @@ class LaboratorioUpdateView(UpdateView):
 class LaboratorioDeleteView(DeleteView):
   model = Laboratorio
   success_url = '/laboratorio/'
+
+
+"""
+# Outra opção de criar uma página propria para o admin e gerar os laboratórios
+# Só precisando alterar as urls e o base.html
+def laboratorio_admin(request, pk_laboratorio=None):
+  search = request.GET.get('search')
+  laboratorios = Laboratorio.objects.all().order_by('nome_lab')
+
+  return render(request, 'laboratorio/laboratorio_list_admin.html', {'laboratorios': laboratorios})
+"""
 
 
 def pessoas(request, pk_laboratorio=None):
