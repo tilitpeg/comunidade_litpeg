@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="container">
+    <div class="">
+        <h1>Alterar Senha</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|bootstrap }}
+            <h1></h1>
+            <button class="btn btn-primary display-1 mb-4" type="submit">Alterar Senha</button>
+            {% if user.is_superuser %}
+              <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+            {% else %}
+              <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

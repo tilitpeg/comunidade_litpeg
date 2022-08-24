@@ -66,7 +66,7 @@ def pessoa_novo(request, pk_laboratorio):
         form = PessoaForm(request.POST)
         if form.is_valid():
             pessoa = form.save(commit=False)
-            pessoa.laboratorio_id = pk_laboratorio;
+            pessoa.laboratorio_id = pk_laboratorio
             pessoa.save()
             return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
 

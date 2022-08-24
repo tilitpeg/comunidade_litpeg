@@ -9,7 +9,8 @@
         <form method="POST">
             {% csrf_token %}
             {{ form|bootstrap }}
-            <button class="btn btn-primary " type="submit">Cadastrar</button>
+            <button class="btn btn-primary display-1 mb-4" type="submit">Cadastrar</button>
+            <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
         </form>
     </div>
 </div>
