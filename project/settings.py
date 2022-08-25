@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'main',
     'laboratorio',
     'bootstrapform',
-    'global_permissions',
 ]
 
 MIDDLEWARE = [
