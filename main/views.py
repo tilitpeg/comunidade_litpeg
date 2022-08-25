@@ -1,5 +1,4 @@
 from multiprocessing import context
-from turtle import update
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, update_session_auth_hash
