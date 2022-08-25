@@ -2,11 +2,8 @@ from multiprocessing import context
 from turtle import update
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.views.generic import CreateView, UpdateView
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.urls import reverse_lazy
-
 from main.forms import NovoUsuarioForm
 
 
@@ -36,10 +33,3 @@ def alterarSenha(request):
         form = PasswordChangeForm(user=request.user)
         context = {'form': form}
         return render(request, template_name='main/alterar_senha.html', context=context)
-
-"""
-class UsuarioCreate(CreateView):
-    template_name = "main/register.html"
-    form_class = NovoUsuarioForm
-    success_url = '/laboratorio/'
-"""

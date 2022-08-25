@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'laboratorio',
-    'bootstrapform'
+    'bootstrapform',
+    'global_permissions',
 ]
 
 MIDDLEWARE = [

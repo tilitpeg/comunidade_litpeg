@@ -7,15 +7,17 @@ from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm
 from django.db.models import Q
 
-
-class ListaLaboratorioView(ListView):
+'''
+Jeito anterior de listar os laboratórios
+class ListaLaboratorioView(ListView):  
   model = Laboratorio
   queryset = Laboratorio.objects.all().order_by('nome_lab')
 
   def get_queryset(self):
+
     queryset = super().get_queryset()
-    if str(self.request.user) != str('admin'):  # Segunda opção de mostra todos os Labs para o admin
-      queryset = queryset.filter(usuario=self.request.user)
+
+    queryset = queryset.filter(usuario=self.request.user)
 
     filtro_nome = self.request.GET.get('nome') or None
 
@@ -23,6 +25,29 @@ class ListaLaboratorioView(ListView):
       queryset = queryset.filter(nome_lab__contains=filtro_nome)
     
     return queryset
+''' 
+ 
+# Novo jeito com função que permite separar a aba de portaria
+def laboratorio_List(request):
+  
+  if str(request.user) == str('portaria'):
+    return redirect('laboratorio.pessoas.portaria')
+
+  elif request.user.is_superuser:
+    return redirect('laboratorio.admin')
+
+  else:
+  
+    laboratorios = Laboratorio.objects.filter(usuario__username=request.user)
+    
+    search = request.GET.get('nome')
+    
+    if search:
+      laboratorios = Laboratorio.objects.filter(
+        Q(nome_lab__icontains=search) | Q(usuario__username__icontains=search)
+        )
+
+    return render(request, 'laboratorio/laboratorio_list.html', {'laboratorios': laboratorios})
 
 
 class LaboratorioCreateView(CreateView):
@@ -90,11 +115,13 @@ def pessoa_remover(request, pk_laboratorio, pk):
     pessoa.delete()
     return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
 
-# Visualização do Admin
+
+#### Visualização do Admin e Portaria ####
 
 # Primeira opção de criar uma página propria para o admin e gerar os laboratórios
 # Só precisando alterar as urls e o base.html
-def laboratorio_admin(request, pk_laboratorio=None):
+def laboratorio_admin(request):
+  
   laboratorios = Laboratorio.objects.all().order_by('nome_lab')
   
   search = request.GET.get('nome')
@@ -107,7 +134,7 @@ def laboratorio_admin(request, pk_laboratorio=None):
   return render(request, 'laboratorio/laboratorio_list_admin.html', {'laboratorios': laboratorios})
 
 
-def pessoas_admin(request, pk_laboratorio=None):
+def pessoas_list_admin(request, pk_laboratorio=None):
   search = request.GET.get('search')
 
   pessoas = Pessoa.objects.all().order_by('nome_completo')
@@ -119,3 +146,17 @@ def pessoas_admin(request, pk_laboratorio=None):
       )
 
   return render(request, 'pessoa/pessoa_list_admin.html', {'pessoas': pessoas})
+
+
+def pessoas_list_portaria(request, pk_laboratorio=None):
+  search = request.GET.get('search')
+
+  pessoas = Pessoa.objects.all().order_by('nome_completo')
+  
+  if search:
+    pessoas = Pessoa.objects.filter(
+      Q(nome_completo__icontains=search) | Q(numero_cracha__icontains=search) | 
+      Q(email__icontains=search) | Q(funcao__icontains=search) | Q(laboratorio__nome_lab__icontains=search)
+      )
+
+  return render(request, 'pessoa/pessoa_list_portaria.html', {'pessoas': pessoas})
