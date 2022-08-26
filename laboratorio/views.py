@@ -6,7 +6,6 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm
 from django.db.models import Q
-from django.urls import reverse_lazy
 
 '''
 Jeito anterior de listar os laboratórios
@@ -125,8 +124,7 @@ def pessoa_remover(request, pk_laboratorio, pk):
 
 #### Visualização do Admin e Portaria ####
 
-# Primeira opção de criar uma página propria para o admin e gerar os laboratórios
-# Só precisando alterar as urls e o base.html
+# Mostra todos os laboratórios para o admin
 def laboratorio_admin(request):
   
   laboratorios = Laboratorio.objects.all().order_by('nome_lab')
@@ -141,7 +139,8 @@ def laboratorio_admin(request):
   return render(request, 'laboratorio/laboratorio_list_admin.html', {'laboratorios': laboratorios})
 
 
-def pessoas_list_admin(request, pk_laboratorio=None):
+# Mostra todos os membros na aba "membros" para o admin
+def pessoas_list_admin(request):
   search = request.GET.get('search')
 
   pessoas = Pessoa.objects.all().order_by('nome_completo')
@@ -155,7 +154,8 @@ def pessoas_list_admin(request, pk_laboratorio=None):
   return render(request, 'pessoa/pessoa_list_admin.html', {'pessoas': pessoas})
 
 
-def pessoas_list_portaria(request, pk_laboratorio=None):
+# Mostra todos os membros na aba "membros" para o admin, com uma navbar prórpia no html
+def pessoas_list_portaria(request):
   search = request.GET.get('search')
 
   pessoas = Pessoa.objects.all().order_by('nome_completo')
@@ -167,3 +167,28 @@ def pessoas_list_portaria(request, pk_laboratorio=None):
       )
 
   return render(request, 'pessoa/pessoa_list_portaria.html', {'pessoas': pessoas})
+
+
+# Edita a pessoa na aba membro do admin, sem a necessidade do pk_laboratorio
+def pessoa_editar_admin(request, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    form = PessoaForm(instance=pessoa)
+    if request.method == "POST":
+        form = PessoaForm(request.POST, instance=pessoa)
+        if form.is_valid():
+            form.save()
+            return redirect('pessoas.admin')
+
+    return render(request, 'pessoa/pessoa_form.html', {'form': form})
+
+
+# Remove a pessoa na aba membro do admin, sem a necessidade do pk_laboratorio
+def pessoa_remover_admin(request, pk):
+    pessoa = get_object_or_404(Pessoa, pk=pk)
+    if request.method == "POST":
+      pessoa.delete()
+      return redirect('pessoas.admin')
+    context = {
+      "object": pessoa 
+    }
+    return render(request, 'pessoa/pessoa_confirm_delete_admin.html', context)

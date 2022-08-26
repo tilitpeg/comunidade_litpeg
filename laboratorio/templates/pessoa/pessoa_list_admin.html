@@ -40,18 +40,17 @@
                         <td>{{ pessoa.numero_cracha }}</td>
                         <td>{{ pessoa.funcao }}</td>
                         <td>{{ pessoa.laboratorio }}</td>
+                        <td>
+                            <a href="{% url 'pessoas.admin.editar' pessoa.pk %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'pessoas.admin.remover' pessoa.pk %}" class="btn btn-danger">Remover</a>
+                        </td>
                     </tr>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         <h1></h1>
-
-        {% if user.is_superuser %}
-            <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
-        {% else %}
-            <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
-        {% endif %}
+        <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>        
 
         
     {% endif %}
