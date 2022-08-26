@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm
 from django.db.models import Q
+from django.urls import reverse_lazy
 
 '''
 Jeito anterior de listar os laboratórios
@@ -72,9 +73,10 @@ class LaboratorioDeleteView(DeleteView):
 
 
 def pessoas(request, pk_laboratorio=None):
+  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio)
+  
   search = request.GET.get('search')
 
-  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio)
   # Filtro Múltiplo (O "|" faz papel do "ou")
   if search:
     pessoas = Pessoa.objects.filter(Q(laboratorio=pk_laboratorio),  # Mostra somente os nomes vinculados ao laboratorio
@@ -112,8 +114,13 @@ def pessoa_editar(request, pk_laboratorio, pk):
 
 def pessoa_remover(request, pk_laboratorio, pk):
     pessoa = get_object_or_404(Pessoa, pk=pk)
-    pessoa.delete()
-    return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
+    if request.method == "POST":
+      pessoa.delete()
+      return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
+    context = {
+      "object": pessoa 
+    }
+    return render(request, 'pessoa/pessoa_confirm_delete.html', context)
 
 
 #### Visualização do Admin e Portaria ####
