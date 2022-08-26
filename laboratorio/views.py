@@ -31,7 +31,7 @@ class ListaLaboratorioView(ListView):
 def laboratorio_List(request):
   
   if str(request.user) == str('portaria'):
-    return redirect('laboratorio.pessoas.portaria')
+    return redirect('pessoas.portaria')
 
   elif request.user.is_superuser:
     return redirect('laboratorio.admin')
