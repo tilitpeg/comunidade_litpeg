@@ -8,5 +8,3 @@ Digita "pip freeze" no terminal que mostra as bibliotecas instaladas. "pip freez
 
 Interface inspirada no projeto do curso abaixo:
 https://www.youtube.com/watch?v=oORKCL7MwSo&list=PLV5pQ5hJ6r7OZjjLFWR8Ag18ZxqBikktz&index=1
-
-Teste
