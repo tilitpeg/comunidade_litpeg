@@ -7,15 +7,14 @@ from main.forms import NovoUsuarioForm
 
 
 def register(request):
+    form = NovoUsuarioForm()
     if request.method == "POST":
         form = NovoUsuarioForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            #login(request, user) -> para criar o usuário e logar logo depois nessa conta
             messages.success(request, "Cadastro realizado com sucesso!")
             return redirect('/laboratorio/')
-        messages.error(request, "Falha no cadastro do usuário.")
-    form = NovoUsuarioForm()
     context = {'form': form}
     return render(request, template_name='main/register.html', context=context)
 
