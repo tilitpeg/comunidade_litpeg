@@ -13,9 +13,11 @@ class Laboratorio(models.Model):
 
 class Pessoa(models.Model):
   FUNCOES = [
+    ('','Selecione sua função'),
     ("Docente", "Docente"),
     ("Discente","Discente"),
     ("Técnico", "Técnico"),
+    ("Pesquisador", "Pesquisador"),
   ]
 
   nome_completo = models.CharField(max_length=256, verbose_name='Nome')
