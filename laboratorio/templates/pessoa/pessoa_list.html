@@ -62,7 +62,7 @@
 
     {% else %}
         <center>
-            <h2>Este laboratório não possui membros cadastrados</h2>
+            <h2>Nenhum membro encontrado!</h2>
             
             <a href="{% url 'pessoa.novo' pk_laboratorio %}" class="btn btn-secondary display-1 mb-4">Adicionar Membro</a>
             {% if user.is_superuser %}

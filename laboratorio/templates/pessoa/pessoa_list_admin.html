@@ -56,7 +56,11 @@
         <h1></h1>
         <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>        
 
-        
+    {% else %}
+        <center>
+            <h2>Nenhum membro encontrado!</h2>
+            <a href="{% url 'pessoas.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+        </center>
     {% endif %}
 
 </div>
