@@ -13,7 +13,7 @@ class NovoUsuarioForm(UserCreationForm):
     def clean_username(self):
         nome = self.cleaned_data['username']
         nome = nome.lower()
-        print(nome)
+
         if User.objects.filter(username=nome).exists():
             raise ValidationError(f'Erro! O nome {nome} já está cadastrado.')
         

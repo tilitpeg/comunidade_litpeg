@@ -11,6 +11,8 @@ class LaboratorioForm(forms.ModelForm):
 
   def clean_nome_lab(self):
       nome = self.cleaned_data['nome_lab']
+      nome = nome.title()
+  
       if Laboratorio.objects.filter(nome_lab=nome).exists():
         raise ValidationError(f'Erro! O laboratório {nome} já está cadastrado.')
       
@@ -24,7 +26,8 @@ class PessoaForm(forms.ModelForm):
 
     def clean_nome_completo(self):
       nome = self.cleaned_data['nome_completo']
-      print(nome)
+      nome = nome.title()
+
       if Pessoa.objects.filter(nome_completo=nome).exists():
         raise ValidationError(f'Erro! O nome {nome} já está cadastrado.')
       
@@ -32,6 +35,7 @@ class PessoaForm(forms.ModelForm):
 
     def clean_email(self):
       email_field = self.cleaned_data['email']
+      email_field = email_field.lower()
       if Pessoa.objects.filter(email=email_field).exists():
         raise ValidationError(f'Erro! O email {email_field} já está cadastrado.')
       
