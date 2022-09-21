@@ -9,9 +9,9 @@ class LaboratorioAdmin(admin.ModelAdmin):
 
 
 class PessoaAdmin(admin.ModelAdmin):
-  list_display = ('nome_completo', 'email', 'numero_cracha', 'funcao', 'laboratorio')
-  search_fields = ('nome_completo', 'email', 'numero_cracha', 'funcao', 'laboratorio__nome_lab')
-  list_filter = ('laboratorio',)
+  list_display = ('nome_completo', 'email', 'numero_cracha', 'funcao', 'laboratorio', 'sala', 'ramal', 'status')
+  search_fields = ('nome_completo', 'email', 'numero_cracha', 'funcao', 'laboratorio__nome_lab', 'status')
+  list_filter = ('laboratorio', 'status')
 
 admin.site.register(Laboratorio, LaboratorioAdmin)
 admin.site.register(Pessoa, PessoaAdmin)

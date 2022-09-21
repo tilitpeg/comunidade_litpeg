@@ -20,6 +20,11 @@ class Pessoa(models.Model):
     ("Pesquisador", "Pesquisador"),
   ]
 
+  STATUS = [
+    ("Ativo", "Ativo"),
+    ("Inativo", "Inativo")
+  ]
+
   nome_completo = models.CharField(max_length=256, verbose_name='Nome')
   email = models.EmailField(verbose_name='E-mail')
   numero_cracha = models.IntegerField(verbose_name='Número do Crachá')
@@ -27,6 +32,8 @@ class Pessoa(models.Model):
   laboratorio = models.ForeignKey(Laboratorio, on_delete=models.CASCADE)
   sala = models.IntegerField(verbose_name='Sala', null=True, blank=True)
   ramal = models.IntegerField(verbose_name='Ramal', null=True, blank=True)
+  status = models.CharField(max_length=25, choices=STATUS, default='Ativo', verbose_name='Status')
+
 
   def __str__(self) -> str:
     return self.nome_completo

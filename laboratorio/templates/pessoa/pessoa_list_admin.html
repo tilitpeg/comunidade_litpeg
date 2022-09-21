@@ -30,6 +30,7 @@
                 <th>Laboratório</th>
                 <th>Sala</th>
                 <th>Ramal</th>
+                <th>Status</th>
                 <th>Ações</th>
             </tr>
             </thead>
@@ -44,6 +45,7 @@
                         <td>{{ pessoa.laboratorio }}</td>
                         <td>{{ pessoa.sala }}</td>
                         <td>{{ pessoa.ramal }}</td>
+                        <td>{{ pessoa.status }}</td>
                         <td>
                             <a href="{% url 'pessoas.admin.editar' pessoa.pk %}" class="btn btn-warning">Editar</a>
                             <a href="{% url 'pessoas.admin.remover' pessoa.pk %}" class="btn btn-danger">Remover</a>

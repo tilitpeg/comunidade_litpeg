@@ -73,7 +73,7 @@ class LaboratorioDeleteView(DeleteView):
 
 
 def pessoas(request, pk_laboratorio=None):
-  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio).order_by('nome_completo')
+  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio, status = 'Ativo').order_by('nome_completo')
   
   paginator = Paginator(pessoas, 10)
   page = request.GET.get('page')
@@ -158,7 +158,7 @@ def pessoas_list_admin(request):
   if search:
     pessoas = Pessoa.objects.filter(
       Q(nome_completo__icontains=search) | Q(numero_cracha__icontains=search) | 
-      Q(email__icontains=search) | Q(funcao__icontains=search)
+      Q(email__icontains=search) | Q(funcao__icontains=search) | Q(status__icontains=search)
       )
 
   return render(request, 'pessoa/pessoa_list_admin.html', {'pessoas': pessoas})
@@ -168,7 +168,7 @@ def pessoas_list_admin(request):
 def pessoas_list_portaria(request):
   search = request.GET.get('search')
 
-  pessoas = Pessoa.objects.all().order_by('nome_completo')
+  pessoas = Pessoa.objects.filter(status = 'Ativo').order_by('nome_completo')
 
   paginator = Paginator(pessoas, 10)
   page = request.GET.get('page')
