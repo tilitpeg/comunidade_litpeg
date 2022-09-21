@@ -53,8 +53,21 @@
                 {% endfor %}
             </tbody>
         </table>
-        <h1></h1>
-        <a href="{% url 'laboratorio.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>        
+        <div class="pagination">
+            <span class="step-links">
+                {% if pessoas.has_previous %}
+                    <a href="?page={{ pessoas.previous_page_number }}">Anterior</a>
+                {% endif %}
+            
+                <span class="current">
+                    {{ pessoas.number }} de {{ pessoas.paginator.num_pages }}
+                </span>
+            
+                {% if pessoas.has_next %}
+                    <a href="?page={{ pessoas.next_page_number }}">Próxima</a>
+                {% endif %}
+            </span>
+        </div>        
 
     {% else %}
         <center>

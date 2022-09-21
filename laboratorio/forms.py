@@ -24,6 +24,7 @@ class PessoaForm(forms.ModelForm):
 
     def clean_nome_completo(self):
       nome = self.cleaned_data['nome_completo']
+      print(nome)
       if Pessoa.objects.filter(nome_completo=nome).exists():
         raise ValidationError(f'Erro! O nome {nome} já está cadastrado.')
       
@@ -42,3 +43,13 @@ class PessoaForm(forms.ModelForm):
         raise ValidationError(f'Erro! O crachá {numero_cracha_field} já está cadastrado.')
       
       return numero_cracha_field
+
+
+# TESTE PARA DECIDIR FUTURAMENTE
+# Serve para editar os membros atuais sem fazer o tratamento de repetição
+# Mas ao mesmo tempo permite que na edição seja repetido algum campo.
+# Só trocar o PessoaForm por PessoaFormEdit
+class PessoaFormEdit(forms.ModelForm):
+  class Meta:
+      model = Pessoa
+      fields = ['nome_completo', 'email', 'numero_cracha','funcao', 'sala', 'ramal']

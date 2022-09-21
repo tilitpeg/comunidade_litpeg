@@ -4,8 +4,9 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Laboratorio, Pessoa
-from .forms import LaboratorioForm, PessoaForm
+from .forms import LaboratorioForm, PessoaForm, PessoaFormEdit
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 '''
 Jeito anterior de listar os laboratórios
@@ -72,7 +73,11 @@ class LaboratorioDeleteView(DeleteView):
 
 
 def pessoas(request, pk_laboratorio=None):
-  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio)
+  pessoas = Pessoa.objects.filter(laboratorio=pk_laboratorio).order_by('nome_completo')
+  
+  paginator = Paginator(pessoas, 10)
+  page = request.GET.get('page')
+  pessoas = paginator.get_page(page)
   
   search = request.GET.get('search')
 
@@ -100,14 +105,15 @@ def pessoa_novo(request, pk_laboratorio):
 
 
 def pessoa_editar(request, pk_laboratorio, pk):
+    '''print(pk_laboratorio)'''
     pessoa = get_object_or_404(Pessoa, pk=pk)
-    form = PessoaForm(instance=pessoa)
+    form = PessoaFormEdit(instance=pessoa)
     if request.method == "POST":
-        form = PessoaForm(request.POST, instance=pessoa)
+        form = PessoaFormEdit(request.POST, instance=pessoa)
         if form.is_valid():
             form.save()
             return redirect(reverse('laboratorio.pessoas', args=[pk_laboratorio]))
-
+    print(pk_laboratorio)
     return render(request, 'pessoa/pessoa_form.html', {'form': form})
 
 
@@ -144,6 +150,10 @@ def pessoas_list_admin(request):
   search = request.GET.get('search')
 
   pessoas = Pessoa.objects.all().order_by('nome_completo')
+
+  paginator = Paginator(pessoas, 10)
+  page = request.GET.get('page')
+  pessoas = paginator.get_page(page)
   
   if search:
     pessoas = Pessoa.objects.filter(
@@ -154,11 +164,15 @@ def pessoas_list_admin(request):
   return render(request, 'pessoa/pessoa_list_admin.html', {'pessoas': pessoas})
 
 
-# Mostra todos os membros na aba "membros" para o admin, com uma navbar prórpia no html
+# Mostra todos os membros na aba "membros" para o admin, com uma navbar própria no html
 def pessoas_list_portaria(request):
   search = request.GET.get('search')
 
   pessoas = Pessoa.objects.all().order_by('nome_completo')
+
+  paginator = Paginator(pessoas, 10)
+  page = request.GET.get('page')
+  pessoas = paginator.get_page(page)
   
   if search:
     pessoas = Pessoa.objects.filter(
@@ -172,14 +186,14 @@ def pessoas_list_portaria(request):
 # Edita a pessoa na aba membro do admin, sem a necessidade do pk_laboratorio
 def pessoa_editar_admin(request, pk):
     pessoa = get_object_or_404(Pessoa, pk=pk)
-    form = PessoaForm(instance=pessoa)
+    form = PessoaFormEdit(instance=pessoa)
     if request.method == "POST":
-        form = PessoaForm(request.POST, instance=pessoa)
+        form = PessoaFormEdit(request.POST, instance=pessoa)
         if form.is_valid():
             form.save()
             return redirect('pessoas.admin')
 
-    return render(request, 'pessoa/pessoa_form.html', {'form': form})
+    return render(request, 'pessoa/pessoa_form_admin.html', {'form': form})
 
 
 # Remove a pessoa na aba membro do admin, sem a necessidade do pk_laboratorio
