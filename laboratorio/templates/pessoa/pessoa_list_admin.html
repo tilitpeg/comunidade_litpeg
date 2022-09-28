@@ -15,6 +15,9 @@
                 <div class="col col-lg-2">
                     <input type="submit" class="btn btn-secondary" value="Buscar"/>
                 </div>
+                <div class="col col-lg-2">
+                    <a href="{% url 'pessoas.admin' %}" class="btn btn-primary display-1 mb-4">Limpar</a>
+                </div>
             </div>
         </form>
     </div>
@@ -55,12 +58,13 @@
                 {% endfor %}
             </tbody>
         </table>
+        <!-- PAGINAÇÃO MODO 1
         <div class="pagination">
             <span class="step-links">
                 {% if pessoas.has_previous %}
                     <a href="?page={{ pessoas.previous_page_number }}">Anterior</a>
                 {% endif %}
-            
+                
                 <span class="current">
                     {{ pessoas.number }} de {{ pessoas.paginator.num_pages }}
                 </span>
@@ -69,7 +73,23 @@
                     <a href="?page={{ pessoas.next_page_number }}">Próxima</a>
                 {% endif %}
             </span>
-        </div>        
+        </div>  
+        -->
+        <!-- PAGINAÇÃO MODO 2 -->    
+        <h1></h1>
+        <div class="pagination">
+            {% for pagina in pessoas.paginator.page_range %}
+              {% if pessoas.number == pagina %}
+                <li class="page-item active">
+                  <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                </li>
+              {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                  </li>
+              {% endif %}
+            {% endfor %}
+                </div>
 
     {% else %}
         <center>
