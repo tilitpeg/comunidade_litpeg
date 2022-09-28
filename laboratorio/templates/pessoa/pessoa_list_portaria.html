@@ -79,20 +79,19 @@
                     </tbody>
                 </table>
 
+                <h1></h1>
                 <div class="pagination">
-                    <span class="step-links">
-                        {% if pessoas.has_previous %}
-                            <a href="?page={{ pessoas.previous_page_number }}">Anterior</a>
-                        {% endif %}
-                    
-                        <span class="current">
-                            {{ pessoas.number }} de {{ pessoas.paginator.num_pages }}
-                        </span>
-                    
-                        {% if pessoas.has_next %}
-                            <a href="?page={{ pessoas.next_page_number }}">Próxima</a>
-                        {% endif %}
-                    </span>
+                    {% for pagina in pessoas.paginator.page_range %}
+                    {% if pessoas.number == pagina %}
+                        <li class="page-item active">
+                        <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
                 </div>
             
             {% else %}
