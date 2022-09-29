@@ -16,6 +16,8 @@
     {% csrf_token %}
     {{ form|bootstrap }}
     <br>
+    <div class="g-recaptcha" data-sitekey="6LeWtqUZAAAAAMO6YmxX5_XWel9hLWrb_iEiff26"></div>
+
     <input type="submit" class="btn btn-primary" value="OK">
     </form> 
     <!--
@@ -26,6 +28,13 @@
         <a href="/admin/">administrador</a>
     </p>
     -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+    <script>
+        function onSubmit(token) {
+          document.getElementById("demo-form").submit();
+        }
+      </script>
 </div>
 
 {% endblock %}
