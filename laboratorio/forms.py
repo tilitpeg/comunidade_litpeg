@@ -22,7 +22,7 @@ class LaboratorioForm(forms.ModelForm):
 class PessoaForm(forms.ModelForm):
     class Meta:
         model = Pessoa
-        fields = ['nome_completo', 'email', 'numero_cracha','funcao', 'sala', 'ramal', 'status',]
+        fields = ['nome_completo', 'email', 'genero', 'numero_cracha','funcao', 'bolsista', 'sala', 'ramal', 'status']
 
     def clean_nome_completo(self):
       nome = self.cleaned_data['nome_completo']
@@ -56,4 +56,4 @@ class PessoaForm(forms.ModelForm):
 class PessoaFormEdit(forms.ModelForm):
   class Meta:
       model = Pessoa
-      fields = ['nome_completo', 'email', 'numero_cracha','funcao', 'sala', 'ramal', 'status']
+      fields = ['nome_completo', 'email', 'genero', 'numero_cracha','funcao', 'bolsista', 'sala', 'ramal', 'status']
