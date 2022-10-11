@@ -1,3 +1,35 @@
 /* h1 {
     color: rgb(8, 0, 0);
 } */
+
+html, body {
+  min-height: 100%;
+}
+
+section{  
+  min-height: 400px 
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+        
+footer {
+  background-color: #343a40;
+  color: #FFF;
+  width: 100%;
+  height: 100px;    
+  text-align: center;
+  line-height: 100px;
+}
+/* para fixar o rodapé no fundo da página */
+.site {
+  display: flex;
+  min-height: 100vh; /* para ocupar 100% da tela */
+  flex-direction: column;
+}
+
+.site-content {
+  flex-grow: 1;
+}
