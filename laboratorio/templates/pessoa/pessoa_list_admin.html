@@ -1,0 +1,106 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Membros Cadastrados</h2>
+    <div class="row">
+        <form method="GET">
+            <div class="row justify-content-md-center mb-3">
+                <div class="col col-lg-5">
+                    <input type="search" value="{{ request.GET.search }}" name="search" class="form-control" placeholder="Buscar por nome"/>
+                </div>
+                <div class="col col-lg-2">
+                    <input type="submit" class="btn btn-secondary" value="Buscar"/>
+                </div>
+                <div class="col col-lg-2">
+                    <a href="{% url 'pessoas.admin' %}" class="btn btn-primary display-1 mb-4">Limpar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if pessoas %}
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+            <tr style="text-align: center;">
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Gênero</th>
+                <th>Número do crachá</th>
+                <th>Função</th>
+                <th>Bolsista</th>
+                <th>Laboratório</th>
+                <th>Sala</th>
+                <th>Ramal</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for pessoa in pessoas %}
+                <tr>
+                    <tr style="text-align: center;">
+                        <td>{{ pessoa.nome_completo }}</td>
+                        <td>{{ pessoa.email }}</td>
+                        <td>{{ pessoa.genero }}</td>
+                        <td>{{ pessoa.numero_cracha }}</td>
+                        <td>{{ pessoa.funcao }}</td>
+                        <td>{{ pessoa.bolsista }}</td>
+                        <td>{{ pessoa.laboratorio }}</td>
+                        <td>{{ pessoa.sala }}</td>
+                        <td>{{ pessoa.ramal }}</td>
+                        <td>{{ pessoa.status }}</td>
+                        <td>
+                            <a href="{% url 'pessoas.admin.editar' pessoa.pk %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'pessoas.admin.remover' pessoa.pk %}" class="btn btn-danger">Remover</a>
+                        </td>
+                    </tr>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- PAGINAÇÃO MODO 1
+        <div class="pagination">
+            <span class="step-links">
+                {% if pessoas.has_previous %}
+                    <a href="?page={{ pessoas.previous_page_number }}">Anterior</a>
+                {% endif %}
+                
+                <span class="current">
+                    {{ pessoas.number }} de {{ pessoas.paginator.num_pages }}
+                </span>
+            
+                {% if pessoas.has_next %}
+                    <a href="?page={{ pessoas.next_page_number }}">Próxima</a>
+                {% endif %}
+            </span>
+        </div>  
+        -->
+        <!-- PAGINAÇÃO MODO 2 -->    
+        <h1></h1>
+        <div class="pagination">
+            {% for pagina in pessoas.paginator.page_range %}
+              {% if pessoas.number == pagina %}
+                <li class="page-item active">
+                  <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                </li>
+              {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                  </li>
+              {% endif %}
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <center>
+            <h2>Nenhum membro encontrado!</h2>
+            <a href="{% url 'pessoas.admin' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+        </center>
+    {% endif %}
+
+</div>
+{% endblock content %}

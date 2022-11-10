@@ -1,0 +1,114 @@
+{% load static %}
+{% load bootstrap %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Cadastro de Laboratórios</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+            <a class="navbar-brand" href="{% url 'pessoas.portaria' %}">LITPEG</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'pessoas.portaria' %}">Membros</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+            </div>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <h2>Membros do Litpeg</h2>
+            <div class="row">
+                <form method="GET">
+                    <div class="row justify-content-md-center mb-3">
+                        <div class="col col-lg-5">
+                            <input type="search" value="{{ request.GET.search }}" name="search" class="form-control" placeholder="Buscar por nome"/>
+                        </div>
+                        <div class="col col-lg-2">
+                            <input type="submit" class="btn btn-primary" value="Buscar"/>
+                        </div>
+                        <div class="col col-lg-2">
+                            <a href="{% url 'pessoas.portaria' %}" class="btn btn-primary display-1 mb-4">Limpar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {% if pessoas %}
+                <table class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+                    <tr style="text-align: center;">
+                        <th>Nome</th>
+                        <th>Número do crachá</th>
+                        <th>Função</th>
+                        <th>Laboratório</th>
+                        <th>Sala</th>
+                        <th>Ramal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for pessoa in pessoas %}
+                        <tr>
+                            <tr style="text-align: center;">
+                                <td>{{ pessoa.nome_completo }}</td>
+                                <td>{{ pessoa.numero_cracha }}</td>
+                                <td>{{ pessoa.funcao }}</td>
+                                <td>{{ pessoa.laboratorio }}</td>
+                                <td>{{ pessoa.sala }}</td>
+                                <td>{{ pessoa.ramal }}</td>
+                            </tr>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h1></h1>
+                <div class="pagination">
+                    {% for pagina in pessoas.paginator.page_range %}
+                    {% if pessoas.number == pagina %}
+                        <li class="page-item active">
+                        <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ pagina }}">{{ pagina }}</a>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            
+            {% else %}
+                <center>
+                    <h2>Nenhum membro encontrado!</h2>
+                    <a href="{% url 'pessoas.portaria' %}" class="btn btn-primary display-1 mb-4">Voltar</a>
+                </center>
+                
+            {% endif %}
+    {% endif %}
+
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      
+    </body>
+</html>
