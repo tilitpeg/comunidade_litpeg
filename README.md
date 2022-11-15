@@ -17,3 +17,5 @@ https://www.youtube.com/watch?v=oORKCL7MwSo&list=PLV5pQ5hJ6r7OZjjLFWR8Ag18ZxqBik
 Conexão do Django com o Banco de dados PostgreSql:
 https://www.horadecodar.com.br/2019/01/24/integrando-django-com-postegresql-windows-e-linux/
 
+Fazer buscas no banco de dados:
+https://www.youtube.com/watch?v=MQuinp8_OWU

@@ -7,6 +7,7 @@ from .models import Laboratorio, Pessoa
 from .forms import LaboratorioForm, PessoaForm, PessoaFormEdit
 from django.db.models import Q
 from django.core.paginator import Paginator
+import psycopg2
 
 '''
 Jeito anterior de listar os laboratórios
@@ -206,3 +207,50 @@ def pessoa_remover_admin(request, pk):
       "object": pessoa 
     }
     return render(request, 'pessoa/pessoa_confirm_delete_admin.html', context)
+
+
+# Criar relatório para baixar lista de membros do Litpeg compatível com a catraca
+def baixar_lista(request):
+  if request.method == "POST":
+    # Quando clica no botão confirmar, executa o que está aqui dentro.
+    try:
+      conn = psycopg2.connect(dbname="membros_litpeg", user="postgres", password="@litpegti22")
+      cur = conn.cursor()
+      cur.execute("""SELECT numero_cracha, nome_completo FROM public.laboratorio_pessoa
+                      WHERE status = 'Ativo'
+                      ORDER BY nome_completo ASC  """)
+      resultado = cur.fetchall()
+      
+      # SALVANDO NO TXT
+      # Regras para colocar os núm do crachás e nomes dos membros:
+      # 
+      primeiro_ciclo = 0
+      with open('lista_nomes.txt', 'w') as arquivo:
+        for res in resultado:
+          print(res)
+          codigo_acesso = "00010"
+          num_cracha = str(res[0])
+          nome_completo = str(res[1])
+          
+          # Tratamento para impedir nomes com mais de 40 caracteres
+          while len(nome_completo) > 40:
+            nome_novo = nome_completo.split()
+            del(nome_novo[-1])
+            nome_completo = " ".join(nome_novo)
+
+          # Para saber a quantidade de espaços que precisa inserir:
+          conta_cracha = 16 - len(num_cracha) 
+          conta_nome = 40 - len(nome_completo)
+          if primeiro_ciclo == 0:
+            arquivo.write(num_cracha + (' ' * conta_cracha) + nome_completo + (' ' * conta_nome) + codigo_acesso)
+            primeiro_ciclo = 1
+          else:
+            arquivo.write('\n' + num_cracha + (' ' * conta_cracha) + nome_completo + (' ' * conta_nome) + codigo_acesso)
+    
+    except (Exception, psycopg2.DatabaseError) as error:
+      print(error)
+    
+    finally:
+      conn.close()
+  
+  return render(request, 'pessoa/baixar_arquivo.html')
