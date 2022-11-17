@@ -18,5 +18,4 @@ urlpatterns = [
     path('adminpessoas/', login_required(views.pessoas_list_admin), name='pessoas.admin'),
     path('adminpessoas/<int:pk>/editar', login_required(views.pessoa_editar_admin), name='pessoas.admin.editar'),
     path('adminpessoas/<int:pk>/remover', login_required(views.pessoa_remover_admin), name='pessoas.admin.remover'),
-    path('listamembro/', login_required(views.baixar_lista), name='baixar.lista'),
 ]

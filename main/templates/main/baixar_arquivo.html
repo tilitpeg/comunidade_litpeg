@@ -9,8 +9,8 @@
       <form method="POST">
         {% csrf_token %}
         <h2>Você deseja baixar um arquivo txt com os membros listados?</h2>
-        <input type="submit" class="btn btn-danger" value="Confirmar">
-        <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1">Voltar</a>
+        <input type="submit" class="btn btn-primary" value="Baixar arquivo TXT">
+        <a href="{% url 'laboratorio.index' %}" class="btn btn-primary display-1">Voltar aos laboratórios</a>
       </form>
     </div>
   </div>

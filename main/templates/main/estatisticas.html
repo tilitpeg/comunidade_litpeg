@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    h1 {
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+}
+
+    .informacoes_basicas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    height: 80px;
+    margin-right: auto;
+    border: 1px solid transparent;
+
+    border-image: linear-gradient(to right top, #bd31c4, #8e3bb0, #643b97, #413579, #282c59);
+
+    border-image-slice: 1;
+    margin-left: 1%;
+
+}
+
+.icone{
+    color: #000000;
+    width: 65px;
+    margin-right: 30px;
+}
+
+.row {
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    max-width: 800px;
+}
+
+</style>
+
+
+  <br class="geral">
+    <div class="row">
+
+        <div class="col-md informacoes_basicas">
+            <svg class="icone" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+            <h1> Membros Ativos:  <span id="membros_total_ativo"></span></h1> 
+            
+        </div>
+
+        <div class="col-md informacoes_basicas">
+            <svg class="icone" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+            <h1> Membros Inativos: <span id="membros_total_inativo"></span></h1> 
+        </div>
+      
+    </div>
+
+
+    <div class="row">
+        
+        <div class="col-md">
+            <br>
+
+            <h1>Divisão por Gênero:</h1>
+            <canvas id="genero" width="250" height="200"></canvas>
+        </div>
+        
+        <div class="col-md">
+            <br>
+            <h1>Bolsistas:</h1>
+            <canvas id="divisao_bolsa" width="250" height="200"></canvas>
+        </div>
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md">
+            <br>
+
+            <h1>Funções:</h1>
+            <canvas id="divisao_funcao" width="250" height="200"></canvas>
+        </div>
+        
+        <div class="col-md">
+            <br>
+            <h1>Membros por Laboratórios: </h1>
+            <canvas id="qtd_membros_por_lab" width="250" height="200"></canvas>
+        </div>
+
+    </div>
+
+
+</div>
+<br>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/scripts.js' %}"></script>
+
+<script>
+
+    window.onload = function(event){
+        renderiza_total_membros_ativos('{% url "total_func_ativo" %}')
+        renderiza_total_membros_inativos('{% url "total_func_inativo" %}')
+        renderiza_genero('{% url "divisao_genero" %}')
+        renderiza_divisao_bolsa('{% url "divisao_bolsa" %}')
+        renderiza_divisao_funcao('{% url "divisao_funcao" %}')
+        renderiza_qtd_membros_por_lab('{% url "qtd_membros_por_lab" %}')
+    }
+    
+</script>
+
+{% endblock content %}

@@ -1,8 +1,8 @@
 Interface web para controle da comunidade do Litpeg
 
 Caminho que utilizo para ativar a máquina virtual: 
-1) python3.9 -m venv 
-2) venv venv\Scripts\activate
+1) python -m venv venv
+2) venv\Scripts\activate
 
 Bibliotecas instaladas:
 
@@ -19,3 +19,6 @@ https://www.horadecodar.com.br/2019/01/24/integrando-django-com-postegresql-wind
 
 Fazer buscas no banco de dados:
 https://www.youtube.com/watch?v=MQuinp8_OWU
+
+Fazer Dashboard estatístico com CHART.JS:
+https://www.youtube.com/watch?v=HozwGeEiXIk
