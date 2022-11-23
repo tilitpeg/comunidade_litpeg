@@ -15,6 +15,5 @@ urlpatterns = [
     path('divisao_bolsa', login_required(views.divisao_bolsa), name='divisao_bolsa'),
     path('divisao_funcao', login_required(views.divisao_funcao), name='divisao_funcao'),
     path('qtd_membros_por_lab', login_required(views.qtd_membros_por_lab), name='qtd_membros_por_lab'),
-    path('files', views.downloadfile, name='downloadfile'),
 
 ]

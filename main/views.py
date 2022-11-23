@@ -100,8 +100,6 @@ def baixar_lista(request):
   return response
 #   return render(request, 'main/baixar_arquivo.html')
 
-def downloadfile(request):
-    print("teste")
 # Criar aba de estatísticas dos membros
 def estatisticas(request):
     if request.method == "GET":
