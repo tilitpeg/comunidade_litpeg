@@ -8,7 +8,10 @@ from laboratorio.models import Pessoa
 import psycopg2
 import matplotlib.pyplot as plt
 from django.http import JsonResponse
-
+from django.http import StreamingHttpResponse
+from wsgiref.util import FileWrapper
+import mimetypes 
+import os
 
 def register(request):
     form = NovoUsuarioForm()
@@ -36,13 +39,12 @@ def alterarSenha(request):
         context = {'form': form}
         return render(request, template_name='main/alterar_senha.html', context=context)
 
-
 # Criar relatório para baixar lista de membros do Litpeg compatível com a catraca
 def baixar_lista(request):
   if request.method == "POST":
     # Quando clica no botão confirmar, executa o que está aqui dentro.
     try:
-      conn = psycopg2.connect(dbname="membros_litpeg", user="postgres", password="@litpegti22")
+      conn = psycopg2.connect(dbname="membros_litpeg", user="postgres2", password="@litpegti22")
       cur = conn.cursor()
       cur.execute("""SELECT numero_cracha, nome_completo FROM public.laboratorio_pessoa
                       WHERE status = 'Ativo'
@@ -60,7 +62,6 @@ def baixar_lista(request):
       primeiro_ciclo = 0 # Serve para impedir que a última linha seja pulada no arquivo txt por causa do \n
       with open('lista_nomes.txt', 'w') as arquivo:
         for res in resultado:
-          print(res)
           codigo_acesso = "00010"
           num_cracha = str(res[0])
           nome_completo = str(res[1])
@@ -81,17 +82,26 @@ def baixar_lista(request):
             arquivo.write('\n' + num_cracha + (' ' * conta_cracha) + nome_completo + (' ' * conta_nome) + codigo_acesso)
       
       # Baixar o arquivo
-
-
-
     except (Exception, psycopg2.DatabaseError) as error:
-      print(error)
+        print(error)
     
     finally:
-      conn.close()
+        conn.close()
   
-  return render(request, 'main/baixar_arquivo.html')
+  base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+  filename = '/lista_nomes.txt'
+  filepath = base_dir + filename
+  thefile = filepath
+  filename = os.path.basename(thefile)
+  chunk_size = 8192
+  response = StreamingHttpResponse(FileWrapper(open(thefile, 'rb'), chunk_size), content_type=mimetypes.guess_type(thefile)[0])
+  response['Content-Length'] = os.path.getsize(thefile)
+  response['Content-Disposition'] = "Attachement;filename=%s" % filename
+  return response
+#   return render(request, 'main/baixar_arquivo.html')
 
+def downloadfile(request):
+    print("teste")
 # Criar aba de estatísticas dos membros
 def estatisticas(request):
     if request.method == "GET":
