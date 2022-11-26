@@ -35,7 +35,9 @@ function renderiza_genero(url){
                 datasets: [{
                     label: 'Quantidade',
                     backgroundColor: [
-                        '#04fc73', '#fc042d', '#04fafc'
+                        'rgba(139,69,19)',
+                        'rgba(255, 205, 86)',
+                        'rgba(75, 192, 192)',
                       ],
                     data: data.data,
                     borderColor: '#000000',
@@ -43,6 +45,14 @@ function renderiza_genero(url){
 
                 }],
                 options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
                     responsive: true,                   
                     legend: {
                         position: 'top',
@@ -73,10 +83,15 @@ function renderiza_divisao_bolsa(url){
                 datasets: [{
                     label: 'Quantidade',
                     backgroundColor: [
-                        'rgba(255, 99, 132)',
-                        'rgba(255, 159, 64)',
-                        'rgba(255, 205, 86)',
-                        'rgba(75, 192, 192)',
+                        'rgba(144,238,144)',
+                        'rgba(60,179,113)',
+                        'rgba(46,139,87)',
+                        'rgba(0,100,0)',
+                        'rgba(0,128,0)',
+                        'rgba(34,139,34)',
+                        'rgba(50,205,50)',
+                        'rgba(124,252,0)'
+                        
                       ],
                     data: data.data,
                     borderColor: '#000000',
@@ -114,12 +129,18 @@ function renderiza_divisao_funcao(url){
             data: {
                 labels: data.labels,
                 datasets: [{
-                    label: 'Quantidade',
+                    label: [
+                        'Discente Graduação',
+                    ],
                     backgroundColor: [
-                        'rgba(255, 99, 132)',
-                        'rgba(255, 159, 64)',
-                        'rgba(255, 205, 86)',
-                        'rgba(75, 192, 192)',
+                        'rgba(144,238,144)',
+                        'rgba(60,179,113)',
+                        'rgba(46,139,87)',
+                        'rgba(0,100,0)',
+                        'rgba(0,128,0)',
+                        'rgba(34,139,34)',
+                        'rgba(50,205,50)',
+                        'rgba(124,252,0)'
                       ],
                     data: data.data,
                     borderColor: '#000000',
@@ -159,10 +180,14 @@ function renderiza_qtd_membros_por_lab(url){
                 datasets: [{
                     label: 'Quantidade',
                     backgroundColor: [
-                        'rgba(255, 99, 132)',
-                        'rgba(255, 159, 64)',
-                        'rgba(255, 205, 86)',
-                        'rgba(75, 192, 192)',
+                        'rgba(144,238,144)',
+                        'rgba(60,179,113)',
+                        'rgba(46,139,87)',
+                        'rgba(0,100,0)',
+                        'rgba(0,128,0)',
+                        'rgba(34,139,34)',
+                        'rgba(50,205,50)',
+                        'rgba(124,252,0)'
                       ],
                     data: data.data,
                     borderColor: '#000000',

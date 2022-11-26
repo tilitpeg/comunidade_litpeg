@@ -11,7 +11,7 @@ class LaboratorioForm(forms.ModelForm):
 
   def clean_nome_lab(self):
       nome = self.cleaned_data['nome_lab']
-      nome = nome.title()
+      
   
       if Laboratorio.objects.filter(nome_lab=nome).exists():
         raise ValidationError(f'Erro! O laboratório {nome} já está cadastrado.')

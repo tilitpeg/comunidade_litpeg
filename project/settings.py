@@ -77,7 +77,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'membros_litpeg',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': '@litpegti22',
         'HOST': 'localhost',
     }
 }

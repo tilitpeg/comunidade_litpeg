@@ -44,28 +44,24 @@ def baixar_lista(request):
   if request.method == "POST":
     # Quando clica no botão confirmar, executa o que está aqui dentro.
     try:
-      conn = psycopg2.connect(dbname="membros_litpeg", user="postgres2", password="@litpegti22")
+      conn = psycopg2.connect(dbname="membros_litpeg", user="postgres", password="@litpegti22")
       cur = conn.cursor()
       cur.execute("""SELECT numero_cracha, nome_completo FROM public.laboratorio_pessoa
                       WHERE status = 'Ativo'
                       ORDER BY nome_completo ASC  """)
       resultado = cur.fetchall()
-      
+
       # SALVANDO NO TXT
-      # Regras para colocar os números dos crachás e nomes dos membros:
-      # O número do cartão tem que começar na 1ª coluna;
-      # O nome da pessoa tem que começar na 17ª coluna;
-      # O código de acesso tem que começar na 57ª coluna;
-      # O espaço entre número do cartão, nome_da_pessoa e o código de acesso deve ser preenchido por espaços, e não por tabulação;
-      # O final da linha é após o código de acesso, e não deve ter nem espaços.
-      
-      primeiro_ciclo = 0 # Serve para impedir que a última linha seja pulada no arquivo txt por causa do \n
+      # Regras para colocar os núm do crachás e nomes dos membros:
+      # 
+      primeiro_ciclo = 0
       with open('lista_nomes.txt', 'w') as arquivo:
         for res in resultado:
+          print(res)
           codigo_acesso = "00010"
           num_cracha = str(res[0])
           nome_completo = str(res[1])
-          
+
           # Tratamento para impedir nomes com mais de 40 caracteres
           while len(nome_completo) > 40:
             nome_novo = nome_completo.split()
@@ -80,25 +76,25 @@ def baixar_lista(request):
             primeiro_ciclo = 1
           else:
             arquivo.write('\n' + num_cracha + (' ' * conta_cracha) + nome_completo + (' ' * conta_nome) + codigo_acesso)
-      
-      # Baixar o arquivo
+
     except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    
+      print(error)
+
     finally:
-        conn.close()
-  
-  base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-  filename = '/lista_nomes.txt'
-  filepath = base_dir + filename
-  thefile = filepath
-  filename = os.path.basename(thefile)
-  chunk_size = 8192
-  response = StreamingHttpResponse(FileWrapper(open(thefile, 'rb'), chunk_size), content_type=mimetypes.guess_type(thefile)[0])
-  response['Content-Length'] = os.path.getsize(thefile)
-  response['Content-Disposition'] = "Attachement;filename=%s" % filename
-  return response
-#   return render(request, 'main/baixar_arquivo.html')
+      conn.close()
+    
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    filename = '/lista_nomes.txt'
+    filepath = base_dir + filename
+    thefile = filepath
+    filename = os.path.basename(thefile)
+    chunk_size = 8192
+    response = StreamingHttpResponse(FileWrapper(open(thefile, 'rb'), chunk_size), content_type=mimetypes.guess_type(thefile)[0])
+    response['Content-Length'] = os.path.getsize(thefile)
+    response['Content-Disposition'] = "Attachement;filename=%s" % filename
+    return response
+
+  return render(request, 'main/baixar_arquivo.html')
 
 # Criar aba de estatísticas dos membros
 def estatisticas(request):
@@ -210,8 +206,10 @@ def qtd_membros_por_lab(request):
                         GROUP BY L.nome_lab  """)
         resultado = cur.fetchall()
         for res in resultado:
-            labels.append(res[0])
-            data.append(res[1])
+          # Pega a parte final do nome do laboratório para encurtar
+          novo = str(res[0]).split()
+          labels.append(novo[-1])
+          data.append(res[1])
 
         print(labels)
         print(data)
