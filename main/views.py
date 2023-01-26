@@ -6,7 +6,6 @@ from django.contrib.auth.forms import PasswordChangeForm
 from main.forms import NovoUsuarioForm
 from laboratorio.models import Pessoa
 import psycopg2
-import matplotlib.pyplot as plt
 from django.http import JsonResponse
 from django.http import StreamingHttpResponse
 from wsgiref.util import FileWrapper
