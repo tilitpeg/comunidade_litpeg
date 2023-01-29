@@ -44,4 +44,46 @@ Foi necessário fazer os seguintes passos no terminal CMD:
 4) Execute o "mod_wsgi-express module-config" e verifique se funcionou.
 5) caso funcione, volte ao vídeo e de seguimento ao passo a passo.
 
+Nas configurações do arquivo httpd.conf do apache insira os caminhos dos arquivos exibidos após a execução do "mod_wsgi-express module-config" conforme explicado no vídeo.
+O que vai resultar o seguinte modelo:
 
+""" -> Copie sem as aspas
+
+ServerName 150.161.138.12:80
+
+# Django Project
+LoadFile "c:/python311/python311.dll"
+LoadModule wsgi_module "c:/python311/lib/site-packages/mod_wsgi/server/mod_wsgi.cp311-win_amd64.pyd"
+WSGIPythonHome "c:/python311"
+WSGIScriptAlias / "C:/Users/Thiago_Botelho/projeto_litpeg/project/wsgi.py"
+WSGIPythonPath C:\Users\Thiago_Botelho\projeto_litpeg;C:\Python311\DLLs;C:\Python311\Lib\site-packages
+
+<Directory "C:/Users/Thiago_Botelho/projeto_litpeg/project/">
+    <Files wsgi.py>
+        Require all granted
+    </Files>
+</Directory>
+
+Alias /static "C:/Users/Thiago_Botelho/projeto_litpeg/staticfiles/"
+<Directory "C:/Users/Thiago_Botelho/projeto_litpeg/staticfiles/">
+    Require all granted
+</Directory>
+
+""" -> Copie sem as aspas
+
+Obs: No caminho do alias do static, verifique qual é o caminho da pasta dos arquivos estáticos executando o "python manage.py collectstatic", onde vai mostrar o caminho em que os arquivos estáticos foram salvos.
+Ex: 
+C:\Users\Thiago_Botelho\projeto_litpeg> python manage.py collectstatic
+
+You have requested to collect static files at the destination
+location as specified in your settings:
+
+    C:\Users\Thiago_Botelho\projeto_litpeg\staticfiles
+    
+Com o caminho retornado, altere as barras de \ para / e cole no trecho "Alias /static" e no trecho "<Directory" das configurações mostradas acima do httpd.conf do apache.
+
+Com tudo finalizado, abra o CMD e digite "cd .." até chegar na raiz do computador (C:\>), após isso, digite "cd Apache24" para entrar na pasta do apache.
+Com isso há os seguintes comandos a serem inseridos no C:\Apache24>:
+- Inicializar o apache: bin\httpd.exe -k start
+- Reiniciar o apache: bin\httpd.exe -k restart
+- Interromper o apache: bin\httpd.exe -k stop
