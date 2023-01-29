@@ -51,7 +51,7 @@ O que vai resultar o seguinte modelo:
 
 ServerName 150.161.138.12:80
 
-# Django Project
+#Django Project
 LoadFile "c:/python311/python311.dll"
 LoadModule wsgi_module "c:/python311/lib/site-packages/mod_wsgi/server/mod_wsgi.cp311-win_amd64.pyd"
 WSGIPythonHome "c:/python311"
