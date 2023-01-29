@@ -51,35 +51,23 @@ O que vai resultar o seguinte modelo:
 
 ServerName 150.161.138.12:80
 
-#Django Project
+# Django Project
 LoadFile "c:/python311/python311.dll"
-
 LoadModule wsgi_module "c:/python311/lib/site-packages/mod_wsgi/server/mod_wsgi.cp311-win_amd64.pyd"
-
 WSGIPythonHome "c:/python311"
-
 WSGIScriptAlias / "C:/Users/Thiago_Botelho/projeto_litpeg/project/wsgi.py"
-
 WSGIPythonPath C:\Users\Thiago_Botelho\projeto_litpeg;C:\Python311\DLLs;C:\Python311\Lib\site-packages
 
 <Directory "C:/Users/Thiago_Botelho/projeto_litpeg/project/">
-
     <Files wsgi.py>
-    
         Require all granted
-        
     </Files>
-    
 </Directory>
 
 Alias /static "C:/Users/Thiago_Botelho/projeto_litpeg/staticfiles/"
-
 <Directory "C:/Users/Thiago_Botelho/projeto_litpeg/staticfiles/">
-
     Require all granted
-    
 </Directory>
-
 """ -> Copie sem as aspas
 
 Obs: No caminho do alias do static, verifique qual é o caminho da pasta dos arquivos estáticos executando o "python manage.py collectstatic", onde vai mostrar o caminho em que os arquivos estáticos foram salvos.
