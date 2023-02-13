@@ -81,7 +81,7 @@ location as specified in your settings:
     
 Com o caminho retornado, altere as barras de \ para / e cole no trecho "Alias /static" e no trecho "<Directory" das configurações mostradas acima do httpd.conf do apache.
 
-Com tudo finalizado, abra o CMD e digite "cd .." até chegar na raiz do computador (C:\>), após isso, digite "cd Apache24" para entrar na pasta do apache.
+Com tudo finalizado, abra o CMD como administrador e digite "cd .." até chegar na raiz do computador (C:\>), após isso, digite "cd Apache24" para entrar na pasta do apache.
 Com isso há os seguintes comandos a serem inseridos no C:\Apache24>:
 - Inicializar o apache: bin\httpd.exe -k start
 - Reiniciar o apache: bin\httpd.exe -k restart
