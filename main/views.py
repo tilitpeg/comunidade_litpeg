@@ -4,7 +4,6 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from main.forms import NovoUsuarioForm
-from laboratorio.models import Pessoa
 import psycopg2
 from django.http import JsonResponse
 from django.http import StreamingHttpResponse
