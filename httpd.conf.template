@@ -9,23 +9,25 @@
 # Se o seu host não tiver um nome DNS registrado, digite seu endereço IP aqui.
 #
 # ServerName localhost:80 # use isso se você estiver executando isso em uma VM ou PC do VirtualBox
-ServerName <Endereço IP>:80
+ServerName 150.161.138.12:80
 
 
 # Django Project
-LoadFile "c:/python37/python37.dll"
-LoadModule wsgi_module "c:/python37/lib/site-packages/mod_wsgi/server/mod_wsgi.cp37-win_amd64.pyd"
-WSGIPythonHome "c:/python37"
-WSGIScriptAlias / "C:/Users/navar/Desktop/webproject/webproject/wsgi.py"
-WSGIPythonPath "C:/Users/navar/Desktop/webproject/"
+LoadFile "C:/Python311/python311.dll"
+LoadModule wsgi_module "C:/Python311/Lib/site-packages/mod_wsgi/server/mod_wsgi.cp311-win_amd64.pyd"
+WSGIPythonHome "C:/Python311"
+WSGIScriptAlias / "C:/Users/Thiago_Botelho/projeto_litpeg/project/wsgi.py"
+WSGIPythonPath "C:/Users/Thiago_Botelho/projeto_litpeg/"
 
-<Directory "C:/Users/navar/Desktop/webproject/webproject/">
+<Directory "C:/Users/Thiago_Botelho/projeto_litpeg/project/">
     <Files wsgi.py>
         Require all granted
     </Files>
 </Directory>
 
-Alias /static "C:/Users/navar/Desktop/webproject/static/"
-<Directory "C:/Users/navar/Desktop/webproject/static/">
+Alias /static "C:/Users/Thiago_Botelho/projeto_litpeg/static/"
+<Directory "C:/Users/Thiago_Botelho/projeto_litpeg/static/">
     Require all granted
 </Directory>
+
+pip uninstall psycopg2

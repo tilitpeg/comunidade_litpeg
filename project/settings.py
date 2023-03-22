@@ -19,9 +19,9 @@ SECRET_KEY = 'django-insecure-@sbt9p!0_wvw@bv0%a@$94xfc3evy=*4h8k-l@liic5tj+5b3z
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.getenv('DEBUG', False)
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['150.161.138.12', 'localhost']
+ALLOWED_HOSTS = ['150.161.138.12', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -46,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -79,6 +80,9 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': '@litpegti22',
         'HOST': 'localhost',
+        'OPTIONS': {
+            'options': '-c statement_timeout=0'
+        }
     }
 }
 
@@ -111,7 +115,7 @@ TIME_ZONE = 'America/Recife'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -122,6 +126,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -129,5 +134,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = '/'
 
-# Configure Django App for Heroku.
-django_on_heroku.settings(locals())
+# Dica do chat-gpt para não ter cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
+

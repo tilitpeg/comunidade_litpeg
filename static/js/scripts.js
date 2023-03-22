@@ -18,14 +18,15 @@ function renderiza_total_membros_inativos(url){
         document.getElementById('membros_total_inativo').innerHTML = data.total
     })
 }
-
+var nome = "João";
+console.log("Olá, " + nome);
 function renderiza_genero(url){
-
     fetch(url, {
         method: 'get',
     }).then(function(result){
         return result.json()
     }).then(function(data){
+        
 
         const ctx = document.getElementById('genero').getContext('2d');
         const myChart = new Chart(ctx, {
@@ -35,9 +36,9 @@ function renderiza_genero(url){
                 datasets: [{
                     label: 'Quantidade',
                     backgroundColor: [
-                        'rgba(139,69,19)',
-                        'rgba(255, 205, 86)',
-                        'rgba(75, 192, 192)',
+                        '#a6a6a6',
+                        '#3c3c3c',
+                        '#212121',
                       ],
                     data: data.data,
                     borderColor: '#000000',
@@ -180,14 +181,8 @@ function renderiza_qtd_membros_por_lab(url){
                 datasets: [{
                     label: 'Quantidade',
                     backgroundColor: [
-                        'rgba(144,238,144)',
-                        'rgba(60,179,113)',
-                        'rgba(46,139,87)',
-                        'rgba(0,100,0)',
-                        'rgba(0,128,0)',
-                        'rgba(34,139,34)',
-                        'rgba(50,205,50)',
-                        'rgba(124,252,0)'
+                        'rgba(60,60,60)',
+                        
                       ],
                     data: data.data,
                     borderColor: '#000000',
