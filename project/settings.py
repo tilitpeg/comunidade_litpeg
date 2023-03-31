@@ -2,7 +2,7 @@ from pathlib import Path
 from telnetlib import LOGOUT
 from dotenv import load_dotenv
 import os
-import django_on_heroku
+# import django_on_heroku
 
 load_dotenv()
 
