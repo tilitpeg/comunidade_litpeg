@@ -19,7 +19,8 @@ from django.contrib.auth.decorators import login_required
 from .decorators import user_not_authenticated
 from .forms import NovoUsuarioForm, UserLoginForm
 
-@user_not_authenticated(redirect_url='/adminlista/')
+# @user_not_authenticated(redirect_url='/adminlista/')
+@user_not_authenticated()
 def custom_login(request):
     if request.user.is_authenticated:
         return redirect('/adminlista/')
@@ -33,7 +34,10 @@ def custom_login(request):
                 messages.success(request, "Login realizado com sucesso!")
                 return redirect('/adminlista/')
         else:
-            for error in list(form.errors.values()):
+            for key, error in list(form.errors.items()):
+                if key == 'captcha' and error[0] == 'Este campo é obrigatório.':
+                    messages.error(request, 'Captcha é obrigatório.')
+                    continue
                 messages.error(request, error)
 
     form = UserLoginForm()
