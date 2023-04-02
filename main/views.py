@@ -1,7 +1,7 @@
 from multiprocessing import context
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth import login, update_session_auth_hash, authenticate
 from django.contrib.auth.forms import PasswordChangeForm
 from main.forms import NovoUsuarioForm
 import psycopg2
@@ -13,6 +13,33 @@ import os
 from django.core.cache import cache
 from django.views.decorators.cache import never_cache
 from datetime import date, datetime
+from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.forms import AuthenticationForm
+
+from .decorators import user_not_authenticated
+from .forms import NovoUsuarioForm, UserLoginForm
+
+@user_not_authenticated(redirect_url='/adminlista/')
+def custom_login(request):
+    if request.user.is_authenticated:
+        return redirect('/adminlista/')
+
+    if request.method == "POST":
+        form = UserLoginForm(request=request, data=request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Login realizado com sucesso!")
+                return redirect('/adminlista/')
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error)
+
+    form = UserLoginForm()
+
+    return render(request, template_name='users/login.html', context={'form': form})
+    
 
 def register(request):
     form = NovoUsuarioForm()

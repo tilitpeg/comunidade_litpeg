@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'main',
     'laboratorio',
     'bootstrapform',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -141,4 +142,5 @@ CACHES = {
     }
 }
 
-
+RECAPTCHA_PUBLIC_KEY = '6LcfZzoiAAAAAEQ3fjo_W65j-SDnbsyu7-qZS1dE'
+RECAPTCHA_PRIVATE_KEY = '6LcfZzoiAAAAAGZ0NWQTfip3w_44Wnp1pFWOzSzI'
