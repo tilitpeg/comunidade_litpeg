@@ -33,3 +33,5 @@ class NovoUsuarioForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+

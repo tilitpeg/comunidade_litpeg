@@ -2,7 +2,7 @@ from pathlib import Path
 from telnetlib import LOGOUT
 from dotenv import load_dotenv
 import os
-import django_on_heroku
+from django.contrib.messages import constants as messages
 
 load_dotenv()
 
@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'main',
     'laboratorio',
     'bootstrapform',
+    'captcha',
+
 ]
 
 MIDDLEWARE = [
@@ -142,3 +144,10 @@ CACHES = {
 }
 
 
+RECAPTCHA_PUBLIC_KEY = '6LeWtqUZAAAAAMO6YmxX5_XWel9hLWrb_iEiff26'
+RECAPTCHA_PRIVATE_KEY = '6Le_n0ElAAAAAMBxIg5Du-c59FKLDmErBPQXpRD9'
+
+MESSAGE_TAGS={
+    messages.ERROR:'danger',
+    messages.SUCCESS:'success',
+}
