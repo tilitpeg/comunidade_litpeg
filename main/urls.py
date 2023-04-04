@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -15,5 +15,6 @@ urlpatterns = [
     path('divisao_bolsa', login_required(views.divisao_bolsa), name='divisao_bolsa'),
     path('divisao_funcao', login_required(views.divisao_funcao), name='divisao_funcao'),
     path('qtd_membros_por_lab', login_required(views.qtd_membros_por_lab), name='qtd_membros_por_lab'),
-
+    # alterações para login personalizado
+    path('login/', views.custom_login, name='login'),
 ]

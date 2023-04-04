@@ -90,3 +90,7 @@ Com isso há os seguintes comandos a serem inseridos no C:\Apache24>:
 
 Após rodar o apache, se não aparecer o site, verifique o log de erros e se aparecer algo do tipo informando que tal biblioteca não está instalada e você instalar no projeto e começar a aparecer vários erros desse tipo em sequência, é sinal de que as bibliotecas não foram instaladas direito, portanto execute o comando "pip uninstall -r requirements.txt" e depois o "pip install -r requirements.txt" para reinstalar tudo novamente. Após esses passos verifique se normalizou a situação.
 Obs: É válido depois de instalar e reinstalar, reiniciar o computador.
+
+
+Para acessar as configurações do Recaptcha do Gooogle, basta acessar o seguinte link utilizando a conta de TI do Litepg:
+https://www.google.com/recaptcha/admin/site/625057727/settings
