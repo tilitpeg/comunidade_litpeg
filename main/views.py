@@ -23,7 +23,8 @@ from .forms import NovoUsuarioForm, UserLoginForm
 @user_not_authenticated()
 def custom_login(request):
     if request.user.is_authenticated:
-        return redirect('/adminlista/')
+        # return redirect('/adminlista/')
+        return redirect('/laboratorio/')
 
     if request.method == "POST":
         form = UserLoginForm(request=request, data=request.POST)
@@ -32,7 +33,8 @@ def custom_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Login realizado com sucesso!")
-                return redirect('/adminlista/')
+                # return redirect('/adminlista/')
+                return redirect('/laboratorio/')
         else:
             for key, error in list(form.errors.items()):
                 if key == 'captcha' and error[0] == 'Este campo é obrigatório.':

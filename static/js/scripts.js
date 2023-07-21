@@ -18,8 +18,7 @@ function renderiza_total_membros_inativos(url){
         document.getElementById('membros_total_inativo').innerHTML = data.total
     })
 }
-var nome = "João";
-console.log("Olá, " + nome);
+
 function renderiza_genero(url){
     fetch(url, {
         method: 'get',
